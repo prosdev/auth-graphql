@@ -27,3 +27,38 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
     });
   });
 }));
+
+function register({ email, password, req}) {
+  const user = new User({ email, password});
+
+  return User.findOne({email})
+    .then( existingUser => {
+      if (existingUser) {
+        throw new Error('Email is in use!');
+      }
+      return user.save();
+    })
+    .then( user => {
+      return new Promise(( resolve, reject ) => {
+        req.logIn( user, ( err ) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(user);
+        });
+      });
+    });
+}
+
+function login({ email, password, req }) {
+  return new Promise( ( resolve, reject ) => {
+    passport.authenticate('local', ( err, user ) => {
+      if (!user) {
+        reject('Invalid credentials supplied!');
+      }
+      req.login(user, () => resolve(user));
+    })({body: { email, password }});
+  });
+}
+
+module.exports = {login, register};

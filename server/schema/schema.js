@@ -8,18 +8,10 @@ const {
   GraphQLList,
   GraphQLNonNull
 } = graphql;
-
-const RootQuery = new GraphQLObjectType({
-  name: 'RootQueryType',
-  fields: {}
-});
-
-const mutation = new GraphQLObjectType({
-  name: 'Mutation',
-  fields: {}
-});
+const RootQueryType = require('./rootQueryType');
+const mutation = require('./mutations');
 
 module.exports = new GraphQLSchema({
-  query: RootQuery,
+  query: RootQueryType,
   mutation
 });

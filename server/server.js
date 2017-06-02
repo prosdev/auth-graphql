@@ -4,19 +4,17 @@ const expressGraphQL = require('express-graphql');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
-const passportConfig = require('./services/passport');
+const passportConfig = require('./services/authService');
 const bodyParser = require('body-parser');
 const MongoStore = require('connect-mongo')(session);
 const schema = require('./schema/schema');
-const routes = require('./routes');
+const config = require('../config');
 
 const app = express();
-
-// Replace with your mongoLab URI
-const MONGO_URI = 'mongodb://stephengrider:stephengrider@ds131139.mlab.com:31139/facespace';
+const MongoURI = config.mongoURL;
 
 mongoose.Promise = global.Promise;
-mongoose.connect(MONGO_URI);
+mongoose.connect(MongoURI);
 mongoose.connection
     .once('open', () => console.log('Connected to MongoLab instance.'))
     .on('error', error => console.log('Error connecting to MongoLab:', error));
@@ -27,7 +25,7 @@ app.use(session({
   saveUninitialized: true,
   secret: 'aaabbbccc',
   store: new MongoStore({
-    url: MONGO_URI,
+    url: MongoURI,
     autoReconnect: true
   })
 }));
@@ -37,7 +35,6 @@ app.use('/graphql', expressGraphQL({
   schema,
   graphiql: true
 }));
-routes(app);
 
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
