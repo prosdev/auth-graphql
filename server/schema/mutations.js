@@ -1,29 +1,37 @@
 const graphql = require('graphql');
 const {
-  GraphQLObjectType,
-  GraphQLString
+    GraphQLObjectType,
+    GraphQLString
 } = graphql;
 const UserType = require('./userType');
 const authService = require('../services/authService');
 
 const mutation = new GraphQLObjectType({
-  name: 'Mutation',
-  fields: {
-    register: {
-      type: UserType,
-      args: {
-        email: { type: GraphQLString },
-        password: { type: GraphQLString }
-      },
-      resolve(parentValue, { email, password }, req) {
-        return authService.register({
-          email,
-          password,
-          req
-        });
-      }
+    name: 'Mutation',
+    fields: {
+        register: {
+            type: UserType,
+            args: {
+                email: {type: GraphQLString},
+                password: {type: GraphQLString}
+            },
+            resolve(parentValue, {email, password}, req) {
+                return authService.register({
+                    email,
+                    password,
+                    req
+                });
+            }
+        },
+        logout: {
+            type: UserType,
+            resolve(parentValue, args, req) {
+                const { user } = req;
+                req.logout();
+                return user;
+            }
+        }
     }
-  }
 });
 
 module.exports = mutation;
