@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory'
 
 import LoginForm from './components/LoginForm';
+import RegistrationForm from './components/RegistrationForm';
+
 import App from './components/App'
 
 
@@ -28,6 +30,7 @@ const Root = () => {
                 <App>
                     <Switch>
                         <Route path="/login" component={LoginForm} />
+                        <Route path="/register" component={RegistrationForm} />
                     </Switch>
                 </App>
             </Router>

@@ -30,7 +30,15 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
 
 function register({ email, password, req}) {
   const user = new User({ email, password});
-
+  if(email === '' && password === '') {
+    throw new Error('Email and password cannot be empty.')
+  }
+  if(email === '') {
+    throw new Error('Email cannot be empty.')
+  }
+  if(password === '') {
+    throw new Error('Password cannot be empty.')
+  }
   return User.findOne({email})
     .then( existingUser => {
       if (existingUser) {
