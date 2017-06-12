@@ -1,2 +1,5 @@
 # About project
-TODO
+To get started, run:
+```bash
+npm run dev
+```
