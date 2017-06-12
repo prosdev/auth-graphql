@@ -8,11 +8,10 @@ import createBrowserHistory from 'history/createBrowserHistory'
 import LoginForm from './components/LoginForm';
 import RegistrationForm from './components/RegistrationForm';
 import Dashboard from './components/Dashboard';
-
+import requireAuth from './components/RequireAuth';
 import App from './components/App'
 
 
-const customHistory = createBrowserHistory();
 const networkInterface = createNetworkInterface({
     uri: '/graphql',
     opts: {
@@ -27,12 +26,12 @@ const Client = new ApolloClient({
 const Root = () => {
     return (
         <ApolloProvider client={Client}>
-            <Router history={customHistory}>
+            <Router>
                 <App>
                     <Switch>
                         <Route path="/login" component={LoginForm} />
                         <Route path="/register" component={RegistrationForm} />
-                        <Route path="/dashboard" component={Dashboard} />
+                        <Route path="/dashboard" component={requireAuth(Dashboard)} />
                     </Switch>
                 </App>
             </Router>

@@ -2,16 +2,27 @@ import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import CurrentUserQuery from '../queries/CurrentUser';
 
-class RequireAuth extends Component {
-    constructor(props) {
-        super(props);
-    }
+export default (WrappedComponent) => {
+    class RequireAuth extends Component {
+        constructor(props) {
+            super(props);
+        }
 
-    componentDidMount() {
-        if (!this.props.data.loading && !this.props.data.user) {
-            this.props.history.push('/login');
+        componentWillUpdate(nextProps) {
+            if (!nextProps.data.loading && !nextProps.data.user) {
+                this.props.history.push('/login');
+            }
+        }
+
+        render() {
+            return (
+                <WrappedComponent {...this.props} />
+            )
         }
     }
+
+    //Return a graphql infused component
+    return graphql(CurrentUserQuery)(RequireAuth);
 }
 
-export default graphql(CurrentUserQuery)(RequireAuth);
+
