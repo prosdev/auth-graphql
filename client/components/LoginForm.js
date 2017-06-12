@@ -17,13 +17,19 @@ class LoginForm extends React.Component {
         };
     }
 
+    componentWillUpdate(nextProps) {
+        if(!this.props.data.user && nextProps.data.user) {
+            this.props.history.push("/dashboard");
+        }
+    }
+
     handleSubmit({email, password}) {
         this.props.mutate({
             variables: {email, password},
             refetchQueries: [{ query: CurrentUserQuery }]
         }).catch( res => {
             const errors = res.graphQLErrors.map(err => err.message);
-            this.setState({ errors });
+            this.setState({ errors});
         });
     }
 
@@ -40,4 +46,6 @@ class LoginForm extends React.Component {
     }
 }
 
-export default graphql(LoginMutation)(LoginForm);
+export default graphql(CurrentUserQuery)(
+    graphql(LoginMutation)(LoginForm)
+);
