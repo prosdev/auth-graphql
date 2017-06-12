@@ -13,7 +13,7 @@ class Header extends Component {
     //Connect to logout mutation
     onLogoutClick() {
         this.props.mutate({
-            
+            refetchQueries: [{ query: CurrentUserQuery }]
         });
     }
 
