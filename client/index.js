@@ -7,6 +7,7 @@ import createBrowserHistory from 'history/createBrowserHistory'
 
 import LoginForm from './components/LoginForm';
 import RegistrationForm from './components/RegistrationForm';
+import Dashboard from './components/Dashboard';
 
 import App from './components/App'
 
@@ -31,6 +32,7 @@ const Root = () => {
                     <Switch>
                         <Route path="/login" component={LoginForm} />
                         <Route path="/register" component={RegistrationForm} />
+                        <Route path="/dashboard" component={Dashboard} />
                     </Switch>
                 </App>
             </Router>
