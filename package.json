@@ -9,6 +9,7 @@
   "author": "prosdevlab",
   "license": "ISC",
   "dependencies": {
+    "apollo-client": "^1.4.2",
     "axios": "^0.15.3",
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
@@ -21,13 +22,17 @@
     "express-graphql": "^0.6.1",
     "express-session": "^1.15.0",
     "graphql": "^0.8.2",
+    "graphql-tag": "^2.2.2",
+    "history": "^4.6.1",
     "html-webpack-plugin": "^2.26.0",
     "lodash": "^4.17.4",
     "mongoose": "^4.7.8",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "react": "15.4.2",
+    "react-apollo": "^1.4.2",
     "react-dom": "15.4.2",
+    "react-router": "^4.1.1",
     "webpack": "^2.2.0",
     "webpack-dev-middleware": "^1.9.0"
   }
